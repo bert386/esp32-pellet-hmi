@@ -1,0 +1,510 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Remote Control</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <link href="bootstrap-toggle.min.css" rel="stylesheet">
+  <script src="jquery.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+  <script src="bootstrap-toggle.min.js"></script>
+  <style>
+  .panel-setting{padding:10px;background-color: #f5f5f5; border-color: #ddd;border: 1px solid #ddd;width:500px;}
+  body{height:100%;background-color:#000000;}
+  .fill {padding-top:20px;  height:100%;}
+  .col-centered
+  {
+    float: none;
+    margin: 0 auto;
+  }
+  .margin
+  {
+    padding-left: 15%;
+    padding-right: 15%;
+  }
+  .custom
+  {
+    height:60px;
+    line-height: 40px;
+  }
+  .custom span
+  {
+   
+  }
+  
+  .panel-body select
+  {
+    border-radius: 4px;
+    width:120px;
+    height:30px;
+    
+  }
+  .btn-fresh
+  {
+    margin-left:10px;
+    font-size: 12px;
+  }
+  .panel-body
+  {
+    padding:0px;
+  }
+  .panel-body div
+  {
+    line-height:30px;
+    padding-top:5px;
+  }
+  #password
+  {
+     width:120px;
+     height:30px;
+     border-radius: 4px;
+  }
+  .button-group
+  {
+    margin-left:30px;
+  }
+  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20px; }
+  .toggle.ios .toggle-handle { border-radius: 20px; }
+  </style>
+</head>
+  <body>
+    <div class="container">
+      <div class="header clearfix">
+        <h3 class="text-muted">Controller Remote Functions</h3>
+      </div>
+      <div class="jumbotron">
+        <div class="alert alert-warning"><strong>Warning!</strong> If system is in cycle, manual control won't be effected!
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <legend>Main Status</legend>
+            <h6 class="text-muted">description of functionalities</h6><br><br>
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">System Status</label>
+              <div class="col-xs-9"><span id="currstatus">heating cycle</span></div>
+            </div>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Current Error </label>
+              <div class="col-xs-9"><span id="currerr">DHT1 Sensor Error</span></div>
+            </div>
+            <br>
+            <div class="row form-group">
+              <label data-toggle="tooltip" title="Switch Control Cycle" class="col-xs-3">Start/Stop Cycle</label>
+              <div class="col-xs-9" id="turncycle"><input type="checkbox" id="cyclebutton" data-toggle="toggle" data-on="Stop Cycle" data-off="Start Cycle" data-onstyle="warning" data-offstyle="info"></div>
+            </div>
+
+          </div>
+          <div class="col-sm-6">
+            <legend>Temperature & Humidity</legend>
+            <h6 class="text-muted">description of functionalities</h6>
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Pellet Temp</label>
+              <div class="col-xs-3"><span class="badge" id="pellettemp">##.##</span><span>&nbsp;&#8457;</span></div>
+              <label data-toggle="tooltip" class="col-xs-3">Water Temp</label>
+              <div class="col-xs-3"><span class="badge" id="watertemp">##.##</span><span>&nbsp;&#8457;</span></div>
+            </div>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Convection Tube</label>
+              <div class="col-xs-3"><span class="badge" id="convtemp">##.##</span><span>&nbsp;&#8457;</span></div>
+              <label data-toggle="tooltip" class="col-xs-3">Exhaustic</label>
+              <div class="col-xs-3"><span class="badge" id="exhausttemp">##.##</span><span>&nbsp;&#8457;</span></div>
+            </div>
+            <br>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Humidity1</label>
+              <div class="col-xs-3"><span class="badge" id="humi1">##.##</span><span>&nbsp;%</span></div>
+              <label data-toggle="tooltip" class="col-xs-3">Humidity2</label>
+              <div class="col-xs-3"><span class="badge" id="humi2">##.##</span><span>&nbsp;%</span></div>
+            </div>
+
+            <br>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-sm-6">
+            <legend>Relays Control</legend>
+            <h6 class="text-muted">In control cycle, we can't control relays manually.</h6>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Blower</label>
+              <div class="col-xs-3" id="blowerdiv"><input id="blower" type="checkbox" data-style="ios" checked data-toggle="toggle" data-onstyle="success"></div>
+              <label data-toggle="tooltip" class="col-xs-3">VAC Filler</label>
+              <div class="col-xs-3" id="vacfillerdiv"><input id="vacfiller" type="checkbox" data-style="ios" checked data-toggle="toggle" data-onstyle="success"></div>
+            </div>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Exhauster</label>
+              <div class="col-xs-3" id="exhausterdiv"><input id="exhauster"  data-style="ios" type="checkbox" checked data-toggle="toggle" data-onstyle="success"></div>
+              <label data-toggle="tooltip" class="col-xs-3">Pump</label>
+              <div class="col-xs-3" id="pumpdiv"><input id="pump"  type="checkbox" data-style="ios" checked data-toggle="toggle" data-onstyle="success"></div>
+            </div>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Feeder</label>
+              <div class="col-xs-3" id="feederdiv"><input id="feeder"  type="checkbox" data-style="ios" checked data-toggle="toggle" data-onstyle="success"></div>
+              <label data-toggle="tooltip" class="col-xs-3">Heater</label>
+              <div class="col-xs-3" id="heaterdiv"><input id="heater"  type="checkbox" data-style="ios" checked data-toggle="toggle" data-onstyle="success"></div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-xs-3"></div>
+
+              <label data-toggle="tooltip" class="col-xs-3">Buildup</label>
+              <div class="col-xs-3" id="buildupdiv"><input id="buildup"  type="checkbox" data-style="ios" checked data-toggle="toggle" data-onstyle="success"></div>
+
+              <div class="col-xs-3"></div>
+
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <legend>Switch Input</legend>
+            <h6 class="text-muted">  ************ </h6>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Door Switch</label>
+              <div class="col-xs-3"><input id="doorswitch"   type="checkbox" data-style="ios" data-on="Open" data-off="Close" checked data-toggle="toggle" data-onstyle="danger" data-offstyle="success"></div>
+              <label data-toggle="tooltip" class="col-xs-3">WaterTemp Overflow</label>
+              <div class="col-xs-3"><input id="waterOVT"   type="checkbox" data-style="ios" data-on="Open" data-off="Close" checked data-toggle="toggle" data-onstyle="danger" data-offstyle="success"></div>
+            </div>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">VAC Switch</label>
+              <div class="col-xs-3"><input id="vacswitch"  type="checkbox" data-style="ios" data-on="Open" data-off="Close" checked data-toggle="toggle" data-onstyle="danger" data-offstyle="success"></div>
+              <label data-toggle="tooltip" class="col-xs-3">Pellet Empty Switch</label>
+              <div class="col-xs-3"><input id="pelletemp"  type="checkbox" data-style="ios" data-on="Open" data-off="Close" checked data-toggle="toggle" data-onstyle="danger" data-offstyle="success"></div>
+            </div>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Exhaust Over Temp</label>
+              <div class="col-xs-3"><input id="exhaustovt"  type="checkbox" data-style="ios" data-on="Open" data-off="Close" checked data-toggle="toggle" data-onstyle="danger" data-offstyle="success"></div>
+              <label data-toggle="tooltip" class="col-xs-3">Water Low Switch</label>
+              <div class="col-xs-3"><input id="waterlow"  type="checkbox" data-style="ios" data-on="Open" data-off="Close" checked data-toggle="toggle" data-onstyle="danger" data-offstyle="success"></div>
+            </div>
+
+            <div class="row form-group">
+              <div class="col-xs-3"></div>
+              <label data-toggle="tooltip" class="col-xs-3">PhotoCell Sensor</label>
+              <div class="col-xs-3"><input id="photosensor"  type="checkbox" data-style="ios" data-on="Open" data-off="Close" checked data-toggle="toggle" data-onstyle="danger" data-offstyle="success"></div>
+              <div class="col-xs-3"></div>
+
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+
+      <div class="jumbotron">
+        <div class="row">
+          <div class="col-sm-6">
+            <legend>Water Temperature Setpoint</legend>
+            <h6 class="text-muted">Descriptions</h6>
+            <div>
+              <div class="col-xs-3"></div>
+              <div class="col-xs-6">
+              <input type="number" id="watertempsetp" required min="0" max="200" step="0.1" value="30">&#8457;</div>
+              <div class="col-xs-3">
+              <button id="tempsettingbtn" class="btn btn-primary btn-sm pull-right">Update Setting</button></div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <legend>Timers Setting</legend>
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Timer1</label>
+              <div class="col-xs-3"><input type="number" id="timer1" required min="0" max="5000" step="1" value="30">(s)</div>
+              <label data-toggle="tooltip" class="col-xs-3">Timer2</label>
+              <div class="col-xs-3"><input type="number" id="timer2" required min="0" max="5000" step="1" value="30">(s)</div>
+            </div>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Timer3</label>
+              <div class="col-xs-3"><input type="number" id="timer3" required min="0" max="5000" step="1" value="30">(s)</div>
+              <label data-toggle="tooltip" class="col-xs-3">Timer4</label>
+              <div class="col-xs-3"><input type="number" id="timer4" required min="0" max="5000" step="1" value="30">(s)</div>
+            </div>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Timer5</label>
+              <div class="col-xs-3"><input type="number" id="timer5" required min="0" max="5000" step="1" value="30">(s)</div>
+              <label data-toggle="tooltip" class="col-xs-3">Timer6</label>
+              <div class="col-xs-3"><input type="number" id="timer6" required min="0" max="5000" step="1" value="30">(s)</div>
+            </div>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Timer7</label>
+              <div class="col-xs-3"><input type="number" id="timer7" required min="0" max="5000" step="1" value="30">(s)</div>
+              <label data-toggle="tooltip" class="col-xs-3">Timer8</label>
+              <div class="col-xs-3"><input type="number" id="timer8" required min="0" max="5000" step="1" value="30">(s)</div>
+            </div>
+
+            <div class="row form-group">
+              <label data-toggle="tooltip" class="col-xs-3">Timer9</label>
+              <div class="col-xs-3"><input type="number" id="timer9" required min="0" max="5000" step="1" value="30" width="10">(s)</div>
+              <div class="col-xs-6"><button id="savetimer" class="btn btn-primary btn-sm pull-right">Save Timers</button></div></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <hr>
+      <footer class="footer">
+        <h6 class="text-muted">Controller project </h6>
+
+      </footer>
+  </body>
+
+</html>
+
+<script type="text/javascript">
+    $( document ).ready(function()
+    {
+        $.getJSON('/getsetting', function(result)
+        {
+            console.log(result);
+            console.log(parseFloat(result.watertempSetpoint));
+            //$("#watertempsetp").value = parseFloat(result.watertempSetpoint);
+            $("#watertempsetp").val(parseFloat(result.watertempSetpoint));
+
+            if(result.timersetting.length == 9)
+            {
+                $("#timer1").val(result.timersetting[0]);
+                $("#timer2").val(result.timersetting[1]);
+                $("#timer3").val(result.timersetting[2]);
+                $("#timer4").val(result.timersetting[3]);
+                $("#timer5").val(result.timersetting[4]);
+                $("#timer6").val(result.timersetting[5]);
+                $("#timer7").val(result.timersetting[6]);
+                $("#timer8").val(result.timersetting[7]);
+                $("#timer9").val(result.timersetting[8]);
+            }
+        });
+
+    });
+
+    $(
+        function Getstatus()
+        {
+            $.getJSON('/getstatus', function(result)
+            {
+                console.log(result);
+
+                $("#currstatus").text(result.cycle);
+                if(result.cycle == "Standby")
+                    $('#cyclebutton').bootstrapToggle('off');
+                else
+                    $('#cyclebutton').bootstrapToggle('on');
+
+                $("#currerr").text(result.currerror);
+
+                // temp & humi
+                $("#pellettemp").text(parseFloat(result.temphumi[0]).toFixed(2));
+                $("#watertemp").text(parseFloat(result.temphumi[1]).toFixed(2));
+                $("#convtemp").text(parseFloat(result.temphumi[2]).toFixed(2));
+                $("#exhausttemp").text(parseFloat(result.temphumi[3]).toFixed(2));
+                $("#humi1").text(parseFloat(result.temphumi[4]).toFixed(1));
+                $("#humi2").text(parseFloat(result.temphumi[5]).toFixed(1));
+
+                // relay status
+                var relayValue = result.relay;
+
+                if((relayValue & 0x01) > 0)
+                  $('#blower').bootstrapToggle('on');
+                else
+                  $('#blower').bootstrapToggle('off');
+
+                if((relayValue & 0x02) > 0)
+                  $('#exhauster').bootstrapToggle('on');
+                else
+                  $('#exhauster').bootstrapToggle('off');
+
+                if((relayValue & 0x04) > 0)
+                  $('#feeder').bootstrapToggle('on');
+                else
+                  $('#feeder').bootstrapToggle('off');
+
+                if((relayValue & 0x08) > 0)
+                  $('#vacfiller').bootstrapToggle('on');
+                else
+                  $('#vacfiller').bootstrapToggle('off');
+
+                if((relayValue & 0x10) > 0)
+                  $('#pump').bootstrapToggle('on');
+                else
+                  $('#pump').bootstrapToggle('off');
+
+                if((relayValue & 0x20) > 0)
+                  $('#heater').bootstrapToggle('on');
+                else
+                  $('#heater').bootstrapToggle('off');
+
+                if((relayValue & 0x40) > 0)
+                  $('#buildup').bootstrapToggle('on');
+                else
+                  $('#buildup').bootstrapToggle('off');
+
+                // switches
+                var switchValue = result.switch;
+
+                $('#doorswitch').bootstrapToggle('enable');
+                if((switchValue & 0x01) > 0)
+                  $('#doorswitch').bootstrapToggle('on');
+                else
+                  $('#doorswitch').bootstrapToggle('off');
+                $('#doorswitch').bootstrapToggle('disable');
+
+                $('#vacswitch').bootstrapToggle('enable');
+                if((switchValue & 0x02) > 0)
+                  $('#vacswitch').bootstrapToggle('on');
+                else
+                  $('#vacswitch').bootstrapToggle('off');
+                $('#vacswitch').bootstrapToggle('disable');
+
+                $('#exhaustovt').bootstrapToggle('enable');
+                if((switchValue & 0x04) > 0)
+                  $('#exhaustovt').bootstrapToggle('on');
+                else
+                  $('#exhaustovt').bootstrapToggle('off');
+                $('#exhaustovt').bootstrapToggle('disable');
+
+                $('#waterOVT').bootstrapToggle('enable');
+                if((switchValue & 0x08) > 0)
+                  $('#waterOVT').bootstrapToggle('on');
+                else
+                  $('#waterOVT').bootstrapToggle('off');
+                $('#waterOVT').bootstrapToggle('disable');
+
+                $('#pelletemp').bootstrapToggle('enable');
+                if((switchValue & 0x10) > 0)
+                  $('#pelletemp').bootstrapToggle('on');
+                else
+                  $('#pelletemp').bootstrapToggle('off');
+                $('#pelletemp').bootstrapToggle('disable');
+
+                $('#waterlow').bootstrapToggle('enable');
+                if((switchValue & 0x20) > 0)
+                  $('#waterlow').bootstrapToggle('on');
+                else
+                  $('#waterlow').bootstrapToggle('off');
+                $('#waterlow').bootstrapToggle('disable');
+
+                $('#photosensor').bootstrapToggle('enable');
+                if((switchValue & 0x40) > 0)
+                  $('#photosensor').bootstrapToggle('on');
+                else
+                  $('#photosensor').bootstrapToggle('off');
+                $('#photosensor').bootstrapToggle('disable');
+                setTimeout(function(){Getstatus();}, 1000);
+            });
+        }
+    );
+
+    $(document).on('click', '#blowerdiv', function(e)
+    {
+        console.log("");
+        $.getJSON('/relay?chn=1', function(result)
+        {
+            console.log(result);
+        });
+    });
+
+    $(document).on('click', '#exhausterdiv', function(e)
+    {
+        $.getJSON('/relay?chn=2', function(result)
+        {
+            console.log(result);
+        });
+    });
+
+    $(document).on('click', '#feederdiv', function(e)
+    {
+        $.getJSON('/relay?chn=3', function(result)
+        {
+            console.log(result);
+        });
+    });
+
+    $(document).on('click', '#vacfillerdiv', function(e)
+    {
+        $.getJSON('/relay?chn=4', function(result)
+        {
+            console.log(result);
+        });
+    });
+
+    $(document).on('click', '#pumpdiv', function(e)
+    {
+        $.getJSON('/relay?chn=5', function(result)
+        {
+            console.log(result);
+        });
+    });
+
+    $(document).on('click', '#heaterdiv', function(e)
+    {
+        $.getJSON('/relay?chn=6', function(result)
+        {
+            console.log(result);
+        });
+    });
+
+    $(document).on('click', '#buildupdiv', function(e)
+    {
+        $.getJSON('/relay?chn=7', function(result)
+        {
+            console.log(result);
+        });
+    });
+
+    $(document).on('click', '#turncycle', function(e)
+    {
+        $.getJSON('/cycle', function(result)
+        {
+            console.log(result);
+        });
+    });
+
+    $(document).on('click', '#tempsettingbtn', function(e)
+    {
+        var query = '/savetemp?temp=' + parseFloat($('#watertempsetp').val()).toFixed(2);
+        console.log(query);
+        $.getJSON(query, function(result)
+        {
+            console.log(result);
+        });
+    });
+
+    $(document).on('click', '#savetimer', function(e)
+    {
+        var query = '/setting?timer1=' + $('#timer1').val();
+        query += '&timer2=';
+        query += $('#timer2').val();
+        query += '&timer3=';
+        query += $('#timer3').val();
+        query += '&timer4=';
+        query += $('#timer4').val();
+        query += '&timer5=';
+        query += $('#timer5').val();
+        query += '&timer6=';
+        query += $('#timer6').val();
+        query += '&timer7=';
+        query += $('#timer7').val();
+        query += '&timer8=';
+        query += $('#timer8').val();
+        query += '&timer9=';
+        query += $('#timer9').val();
+
+        console.log(query);
+        $.getJSON(query, function(result)
+        {
+            console.log(result);
+        });
+    });
+
+
+</script>
