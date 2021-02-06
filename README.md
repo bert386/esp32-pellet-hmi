@@ -19,3 +19,7 @@
 ![image2](hmi/3.2inch/02-diag01.png)
 ![image3](hmi/3.2inch/04-diag03.png)
 
+# Wiring Diagram & Screenshots
+![page01](webscreenshot/01.png)
+![page02](webscreenshot/02.png)
+![page03](webscreenshot/03.png)
